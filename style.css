@@ -1,0 +1,44 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+.container {
+    
+    
+}
+
+.square {
+    margin: auto;
+    margin-top: 100px;
+    background-color: gray;
+    width: 700px;
+    height: 500px;
+
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 100px;
+    
+}
+form div{
+    margin-top: 100px;
+    color: white;
+}
+form div input{
+    height: 25px;
+    border: 1px solid;
+    border-radius: 5px;
+}
+
+button {
+    width: 80px;
+    height: 25px;
+    border: 1px solid;
+    border-radius: 5px;
+}
