@@ -9,7 +9,6 @@ const firebaseConfig = {
   measurementId: "G-QYCDYE2PBY"
 };
 
-
 const app = firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
@@ -24,12 +23,16 @@ document.getElementById('signup').addEventListener('click', function () {
     alert('Username cannot contain spaces.');
     return;
   }
-
-  // const passwordRegex = /^(?=.[A-Z])(?=.[0-9])(?=.[!@#$%^&])[A-Za-z\d!@#$%^&*]{8,}$/;
-  // if (!passwordRegex.test(password)) {
-  //   alert('Password must be at least 8 characters long and include at least one uppercase letter, one number, and one special character.');
-  //   return;
-  // }
+  
+  if (
+    password.length < 8 ||
+    !/[0-9]/.test(password) ||
+    !/[A-Z]/.test(password) ||
+    !/[!@#$%^&*]/.test(password)
+  ) {
+    alert('Password must be at least 8 characters and contain 1 number, 1 uppercase letter, and special characters.');
+    return;
+  }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
@@ -43,7 +46,6 @@ document.getElementById('signup').addEventListener('click', function () {
     return;
   }
 
-  // Create user with email and password
   auth.createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       const user = userCredential.user;
@@ -62,6 +64,11 @@ document.getElementById('signup').addEventListener('click', function () {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.error(`${errorCode}: ${errorMessage}`);
+
+      if (errorCode === 'auth/email-already-in-use') {
+        alert('Email address is already in use. Please use a different email address.');
+      } else {
+        console.error(`${errorCode}: ${errorMessage}`);
+      }
     });
 });
